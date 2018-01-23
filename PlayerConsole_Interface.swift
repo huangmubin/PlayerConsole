@@ -20,10 +20,35 @@ extension PlayerConsole {
         player.load(network_video: network)
     }
     
+    func load(url: URL) {
+        player.load(url: url)
+    }
+    
     // MARK: - Controls
     
     func play() {
         player_console_buttons(play: true)
+    }
+    
+    func stop() {
+        player_console_buttons(play: false)
+    }
+    
+    func clear() {
+        player_console_buttons(play: false)
+        player.clear()
+        progress(to: 0)
+    }
+    
+    /** Change the player progress in 0 ~ 1 */
+    func progress(to value: CGFloat) {
+        if value >= 0 && value <= 1 {
+            player_console_progress_touch_end(value: value)
+        } else if value < 0 {
+            player_console_progress_touch_end(value: 0)
+        } else {
+            player_console_progress_touch_end(value: 1)
+        }
     }
     
     // MARK: - Images
@@ -63,6 +88,15 @@ extension PlayerConsole {
         get { return bar.buttons.backward.image(for: .normal) }
     }
     
+    // MARK: - Image
     
+    /** */
+    func screenshot(at time: Double? = nil) -> UIImage? {
+        if time == nil {
+            return player.screenshort(time: nil)
+        } else {
+            return player.screenshort(time: Int(time! * 10))
+        }
+    }
     
 }

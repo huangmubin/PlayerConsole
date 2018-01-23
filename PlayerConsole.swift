@@ -35,6 +35,10 @@ class PlayerConsole: UIView,
     weak var delegate_state: PlayerConsole_State_Delegate?
     weak var delegate_time: PlayerConsole_Time_Delegate?
     
+    deinit {
+        print("\ndeinit \(player.url) player\n")
+    }
+    
     // MARK: - Value
     
     var screenshot: UIImage?
@@ -109,6 +113,9 @@ class PlayerConsole: UIView,
     
     func player_console_buttons(play: Bool) {
         if play {
+            if bar.progress.value == 1 {
+                progress(to: 0)
+            }
             player.play()
             bar.touch.image(show: false)
             bar.buttons.play.isSelected = true
