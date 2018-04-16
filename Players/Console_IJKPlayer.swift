@@ -105,6 +105,7 @@ extension PlayerConsole {
         override func clear() {
             ijk_player?.stop()
             ijk_player?.shutdown()
+            ijk_player = nil
             setNeedsDisplay()
             state = .error(PlayerConsole_Player_State.no_load)
         }
